@@ -28,7 +28,7 @@ export async function signJWT(
 
   const header = { ...token.header, typ: 'JWT', alg: 'ES256', kid };
   const payload = { ...token.payload };
-  const iat = Date.now() / 1000;
+  const iat = Math.floor(Date.now() / 1000);
   if (!options?.noTimestamp) {
     payload.iat = iat;
   }
