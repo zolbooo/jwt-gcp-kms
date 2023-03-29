@@ -5,13 +5,13 @@ import { KeyManagementServiceClient } from '@google-cloud/kms';
 
 import { KeyPath } from './types';
 
-import { signData } from './sign';
-import { getLatestVersion } from './keys';
+import { signData } from './sign.js';
+import { getLatestVersion } from './keys.js';
 import {
   JsonWebKeySet,
   getPublicKey,
   getPublicKeyFingerprint,
-} from './public-keys';
+} from './public-keys.js';
 
 export async function signJWT(
   client: KeyManagementServiceClient,

@@ -2,7 +2,7 @@ import crypto, { JsonWebKey, KeyObject } from 'node:crypto';
 import { crc32c } from '@aws-crypto/crc32c';
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 
-import { KeyPath } from './types';
+import type { KeyPath } from './types';
 
 export interface JsonWebKeyWithID extends JsonWebKey {
   kid: string;
