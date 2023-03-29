@@ -2,8 +2,12 @@
   "name": "jwt-gcp-kms",
   "version": "1.0.0",
   "description": "JWT library with GCP KMS support",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "type": "module",
+  "exports": {
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js"
+  },
+  "types": "lib/esm/index.d.ts",
   "files": [
     "lib",
     "LICENSE"
