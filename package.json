@@ -73,7 +73,9 @@
   },
   "dependencies": {
     "@aws-crypto/crc32c": "^4.0.0",
-    "@google-cloud/kms": "^3.5.0",
     "jsonwebtoken": "^9.0.0"
+  },
+  "peerDependencies": {
+    "@google-cloud/kms": "^3.5.0"
   }
 }
