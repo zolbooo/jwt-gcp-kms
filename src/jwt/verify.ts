@@ -1,7 +1,7 @@
 import jwt, { JwtPayload, VerifyOptions } from 'jsonwebtoken';
 import crypto from 'node:crypto';
 
-import type { JsonWebKeySet } from '../public-keys';
+import type { JsonWebKeySet } from '../types';
 
 export function verifyJWT(
   token: string,

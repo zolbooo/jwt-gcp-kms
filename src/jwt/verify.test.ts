@@ -1,5 +1,5 @@
 import { verifyJWT } from './verify';
-import type { JsonWebKeySet } from '../public-keys';
+import { JsonWebKeySet } from '../types';
 
 /*
 Private key used:

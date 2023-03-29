@@ -1,15 +1,8 @@
-import crypto, { JsonWebKey, KeyObject } from 'node:crypto';
+import crypto, { KeyObject } from 'node:crypto';
 import { crc32c } from '@aws-crypto/crc32c';
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 
-import type { KeyPath } from './types';
-
-export interface JsonWebKeyWithID extends JsonWebKey {
-  kid: string;
-}
-export interface JsonWebKeySet {
-  keys: JsonWebKeyWithID[];
-}
+import type { JsonWebKeySet, JsonWebKeyWithID, KeyPath } from './types';
 
 export function getPublicKeyFingerprint(publicKey: KeyObject): string {
   // Algorithm was adapted from: https://github.com/phra/key-fingerprint/blob/master/index.ts
