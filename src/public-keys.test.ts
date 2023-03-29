@@ -1,11 +1,11 @@
-import { convertPublicPemToJWK } from "./public-keys";
+import { convertPublicPemToJWK } from './public-keys';
 
-describe("Public keys", () => {
-  it("should convert PEM key to JWK properly", () => {
+describe('Public keys', () => {
+  it('should convert PEM key to JWK properly', () => {
     expect(
       convertPublicPemToJWK(
-        "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEre7QZrfwGJR8y5CLVL/HJsxTq+yD\nDL9ffwE/DSKhBu0a6CSHhQ08r0Znl7xIQPYBGan0CDh0z1l8eRSDRJso1g==\n-----END PUBLIC KEY-----\n"
-      )
+        '-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEre7QZrfwGJR8y5CLVL/HJsxTq+yD\nDL9ffwE/DSKhBu0a6CSHhQ08r0Znl7xIQPYBGan0CDh0z1l8eRSDRJso1g==\n-----END PUBLIC KEY-----\n',
+      ),
     ).toMatchInlineSnapshot(`
       {
         "crv": "P-256",
