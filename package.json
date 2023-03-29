@@ -13,7 +13,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build:esm": "tsc",
+    "build:esm": "tsc -p tsconfig.build.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build": "npm run build:cjs && npm run build:esm",
     "test": "jest",
