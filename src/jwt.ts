@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import { JwtHeader, JwtPayload, SignOptions } from 'jsonwebtoken';
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 
-import { KeyPath } from './types';
+import type { KeyPath } from './types';
 
 import { signData } from './jwt/sign.js';
 import { getLatestVersion } from './keys.js';
