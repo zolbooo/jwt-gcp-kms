@@ -25,7 +25,13 @@ export function extractSignatureValue(data: Uint8Array, size = 32): Uint8Array {
   return result;
 }
 
-export function convertASN1Signature(data: Uint8Array) {
+/**
+ * KMS service returns ASN.1 signatures, so that this function
+ * should be used to convert a signature to the JWT-compatible format.
+ * @param data EC signature in ASN.1 format.
+ * @returns EC signature in format `r || s` as per [RFC7515](https://www.rfc-editor.org/rfc/rfc7515#appendix-A.3.2)
+ */
+export function convertASN1Signature(data: Uint8Array): Uint8Array {
   if (data[0] !== 0x30 || data.length < 2) {
     throw new Error('Invalid signature, expected ASN.1 SEQUENCE');
   }
