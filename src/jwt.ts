@@ -5,7 +5,7 @@ import { KeyManagementServiceClient } from '@google-cloud/kms';
 
 import { KeyPath } from './types';
 
-import { signData } from './sign.js';
+import { signData } from './jwt/sign.js';
 import { getLatestVersion } from './keys.js';
 import { getPublicKey, getPublicKeyFingerprint } from './public-keys.js';
 
