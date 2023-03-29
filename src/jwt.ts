@@ -1,4 +1,3 @@
-import jwt, { VerifyOptions } from 'jsonwebtoken';
 import crypto from 'node:crypto';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import { KeyManagementServiceClient } from '@google-cloud/kms';
@@ -7,11 +6,7 @@ import { KeyPath } from './types';
 
 import { signData } from './sign.js';
 import { getLatestVersion } from './keys.js';
-import {
-  JsonWebKeySet,
-  getPublicKey,
-  getPublicKeyFingerprint,
-} from './public-keys.js';
+import { getPublicKey, getPublicKeyFingerprint } from './public-keys.js';
 
 export async function signJWT(
   client: KeyManagementServiceClient,
@@ -41,25 +36,4 @@ export async function signJWT(
   );
 }
 
-export function verifyJWT(
-  token: string,
-  jwks: JsonWebKeySet,
-  options?: VerifyOptions,
-): JwtPayload {
-  const rawTokenData = jwt.decode(token, { complete: true });
-  if (!rawTokenData?.header.kid) {
-    throw Error('No kid provided in token');
-  }
-  const { kid } = rawTokenData.header;
-
-  const publicKeyJwk = jwks.keys.find((key) => key.kid === kid);
-  if (!publicKeyJwk) {
-    throw Error(`Key with id ${kid} was not found`);
-  }
-
-  const publicKey = crypto.createPublicKey({
-    key: publicKeyJwk,
-    format: 'jwk',
-  });
-  return jwt.verify(token, publicKey, options) as JwtPayload;
-}
+export { verifyJWT } from './jwt/verify.js';
