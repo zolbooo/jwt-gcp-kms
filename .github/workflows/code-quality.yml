@@ -1,0 +1,27 @@
+name: Code Quality
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+jobs:
+  code-quality:
+    name: type-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install node v16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install Node.js dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Check types
+        run: npx tsc --noEmit
+      - name: Test
+        run: npm test
