@@ -1,4 +1,4 @@
-import { convertASN1Signature } from './sign';
+import { convertASN1Signature } from './asn1';
 
 describe('Sign data', () => {
   // See: https://asn1.io/asn1playground
