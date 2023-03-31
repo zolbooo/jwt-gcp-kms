@@ -25,3 +25,21 @@ jobs:
         run: npx tsc --noEmit
       - name: Test
         run: npm test
+  e2e-test:
+    name: e2e-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install node v16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Node.js dependencies
+        run: npm ci
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          workload_identity_provider: 'projects/537642768748/locations/global/workloadIdentityPools/github-actions'
+          service_account: 'e2e-tests@jwt-gcp-kms.iam.gserviceaccount.com'
+      - name: Run end-to-end tests
+        run: npm run test-e2e
