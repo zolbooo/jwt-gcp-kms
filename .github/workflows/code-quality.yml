@@ -9,7 +9,7 @@ on:
   workflow_call:
 jobs:
   code-quality:
-    name: type-check
+    name: code-quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
