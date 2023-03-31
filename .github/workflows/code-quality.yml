@@ -43,3 +43,5 @@ jobs:
           service_account: 'e2e-tests@jwt-gcp-kms.iam.gserviceaccount.com'
       - name: Run end-to-end tests
         run: npm run test-e2e
+    permissions:
+      id-token: read
