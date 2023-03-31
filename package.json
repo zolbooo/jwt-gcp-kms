@@ -26,6 +26,7 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build": "npm run build:cjs && npm run build:esm",
     "test": "jest",
+    "test-e2e": "jest --config ./e2e/jest.config.js",
     "lint": "eslint src/**/*.ts"
   },
   "repository": {
