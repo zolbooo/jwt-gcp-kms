@@ -1,5 +1,6 @@
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 
+// TODO: Add e2e tests for this function
 export async function getLatestVersion(
   client: KeyManagementServiceClient,
   keyName: string,
@@ -11,7 +12,7 @@ export async function getLatestVersion(
   let latestVersion = versions[0];
   for (let i = 1; i < versions.length; i += 1) {
     if (
-      new Date(latestVersion.createTime as string).valueOf() <
+      new Date(latestVersion.createTime as string).valueOf() >
       new Date(versions[i].createTime as string).valueOf()
     ) {
       latestVersion = versions[i];
