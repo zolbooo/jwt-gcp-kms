@@ -16,14 +16,26 @@ export async function signJWT(
     header?: JwtHeader;
     payload: JwtPayload;
   },
-  options?: Pick<SignOptions, 'expiresIn' | 'noTimestamp'>,
+  options?: Pick<SignOptions, 'expiresIn' | 'noTimestamp'> & {
+    /**
+     * Use this option to force signing a token with specific version of crypto key.
+     */
+    keyVersion?: string;
+  },
 ): Promise<string> {
-  const keyLatestVersion = await getLatestVersion(
-    client,
-    client.cryptoKeyPath(await client.getProjectId(), region, keyRing, keyName),
-  );
+  const keyVersionName: string =
+    options?.keyVersion ??
+    (await getLatestVersion(
+      client,
+      client.cryptoKeyPath(
+        await client.getProjectId(),
+        region,
+        keyRing,
+        keyName,
+      ),
+    ).then(({ name }) => name));
   const kid = getPublicKeyFingerprint(
-    crypto.createPublicKey(await getPublicKey(client, keyLatestVersion.name)),
+    crypto.createPublicKey(await getPublicKey(client, keyVersionName)),
   );
 
   const header = { ...token.header, typ: 'JWT', alg: 'ES256', kid };
@@ -44,7 +56,7 @@ export async function signJWT(
     Buffer.from(JSON.stringify(payload)).toString('base64url'),
   ].join('.');
   const signature = await signData(client, {
-    keyVersionName: keyLatestVersion.name,
+    keyVersionName,
     algorithm: 'sha256',
     data: Buffer.from(unprotectedToken),
   });
