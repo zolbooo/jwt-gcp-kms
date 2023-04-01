@@ -5,6 +5,13 @@ JWT library with GCP KMS support
 ## Features
 
 - JWT signing and verification (based on [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) library)
+  - [ ] HS256
+  - [x] ES256
+  - [ ] ES384
+  - [ ] RS256
+  - [ ] RS512
+  - [ ] PS256
+  - [ ] PS512
 - Exporting active key version to [JSON Web Key Set](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-key-sets)
 
 ## Examples
