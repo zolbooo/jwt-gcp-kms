@@ -40,7 +40,8 @@ jobs:
           node-version: 16
       - name: Install Node.js dependencies
         run: npm ci
-      - name: Authenticate to Google Cloud
+      - id: auth
+        name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v1'
         with:
           create_credentials_file: true
@@ -48,3 +49,5 @@ jobs:
           service_account: 'e2e-tests@jwt-gcp-kms.iam.gserviceaccount.com'
       - name: Run end-to-end tests
         run: npm run test-e2e
+        env:
+          GCP_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
