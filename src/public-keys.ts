@@ -46,8 +46,8 @@ export async function getPublicKey(
 }
 
 /**
- * List public keys of specific key in KMS
- * @param keyName Name of the key
+ * Get public keys of active key versions in [JWKS](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-key-sets) format.
+ * @param keyPath Location of the key
  * @returns List of active public keys in JWKS format
  */
 export async function getPublicKeys(
