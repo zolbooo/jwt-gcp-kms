@@ -1,3 +1,13 @@
+/**
+ * It's essential to support multiple key versions simultaneously during a key migration.
+ * You can create a new crypto key version and library will use it by default to sign all new tokens.
+ *
+ * If you don't disable old key versions, they will be returned from `getPublicKeys` function,
+ * so that they could be used for old token validation.
+ *
+ * If you would like rotate and revoke old tokens, disable old key versions and their
+ * public keys won't be returned from `getPublicKeys` call.
+ */
 import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
 
