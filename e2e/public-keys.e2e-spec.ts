@@ -2,22 +2,9 @@ import { KeyManagementServiceClient } from '@google-cloud/kms';
 
 import { getPublicKeys } from '../src/public-keys';
 
+import { destroyActiveKeyVersions } from './utils/cleanup';
+
 const client = new KeyManagementServiceClient({ projectId: 'jwt-gcp-kms' });
-async function destroyActiveKeyVersions(keyPath: string) {
-  const [result] = await client.listCryptoKeyVersions({
-    parent: keyPath,
-    filter: 'state=ENABLED',
-  });
-  if (result.length > 0) {
-    await Promise.all(
-      result.map((cryptoKeyVersion) =>
-        client.destroyCryptoKeyVersion({
-          name: cryptoKeyVersion.name,
-        }),
-      ),
-    );
-  }
-}
 
 describe('Public keys', () => {
   const keyPath = client.cryptoKeyPath(
@@ -27,13 +14,13 @@ describe('Public keys', () => {
     'public-keys-test',
   );
   beforeAll(async () => {
-    await destroyActiveKeyVersions(keyPath);
+    await destroyActiveKeyVersions(client, keyPath);
     // Create two new key versions
     await client.createCryptoKeyVersion({ parent: keyPath });
     await client.createCryptoKeyVersion({ parent: keyPath });
   });
   afterAll(async () => {
-    await destroyActiveKeyVersions(keyPath);
+    await destroyActiveKeyVersions(client, keyPath);
   });
 
   it('should get public keys properly', async () => {
