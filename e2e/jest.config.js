@@ -9,4 +9,6 @@ export default {
   transform: {
     '^.+\\.ts$': ['ts-jest', { useESM: true }],
   },
+  // These test involve network requests, so that timeout should be increased
+  testTimeout: 30_000,
 };
