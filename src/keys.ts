@@ -13,7 +13,7 @@ export async function getLatestVersion(
   let latestVersion = versions[0];
   for (let i = 1; i < versions.length; i += 1) {
     if (
-      timestampToDate(latestVersion.createTime).valueOf() >
+      timestampToDate(latestVersion.createTime).valueOf() <
       timestampToDate(versions[i].createTime).valueOf()
     ) {
       latestVersion = versions[i];
