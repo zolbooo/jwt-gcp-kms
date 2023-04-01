@@ -9,6 +9,13 @@ import { signData } from './jwt/sign.js';
 import { getLatestVersionName } from './keys.js';
 import { getPublicKey, getPublicKeyFingerprint } from './public-keys.js';
 
+/**
+ * Sign a JWT using the latest active version of crypto key.
+ * @param keyPath The path of key
+ * @param token Token data
+ * @param options Some additional options provided by [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) library
+ * @returns JWT string
+ */
 export async function signJWT(
   client: KeyManagementServiceClient,
   { keyName, keyRing, region = 'asia-east2' }: KeyPath,
