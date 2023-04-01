@@ -1,9 +1,6 @@
-import { KeyManagementServiceClient } from '@google-cloud/kms';
+import { client } from './client';
 
-export async function destroyActiveKeyVersions(
-  client: KeyManagementServiceClient,
-  keyPath: string,
-) {
+export async function destroyActiveKeyVersions(keyPath: string) {
   const [result] = await client.listCryptoKeyVersions({
     parent: keyPath,
     filter: 'state=ENABLED',

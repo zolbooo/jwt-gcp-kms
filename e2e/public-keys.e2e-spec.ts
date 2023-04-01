@@ -1,10 +1,7 @@
-import { KeyManagementServiceClient } from '@google-cloud/kms';
-
 import { getPublicKeys } from '../src/public-keys';
 
+import { client } from './utils/client';
 import { destroyActiveKeyVersions } from './utils/cleanup';
-
-const client = new KeyManagementServiceClient({ projectId: 'jwt-gcp-kms' });
 
 describe('Public keys', () => {
   const keyPath = client.cryptoKeyPath(
@@ -14,13 +11,13 @@ describe('Public keys', () => {
     'public-keys-test',
   );
   beforeAll(async () => {
-    await destroyActiveKeyVersions(client, keyPath);
+    await destroyActiveKeyVersions(keyPath);
     // Create two new key versions
     await client.createCryptoKeyVersion({ parent: keyPath });
     await client.createCryptoKeyVersion({ parent: keyPath });
   });
   afterAll(async () => {
-    await destroyActiveKeyVersions(client, keyPath);
+    await destroyActiveKeyVersions(keyPath);
   });
 
   it('should get public keys properly', async () => {
