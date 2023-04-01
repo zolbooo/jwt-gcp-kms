@@ -1,6 +1,18 @@
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 
-// TODO: Add e2e tests for this function
+import type { google } from '@google-cloud/kms/build/protos/protos';
+
+function timestampToDate(timestamp?: google.protobuf.ITimestamp | null): Date {
+  if (!timestamp) {
+    return new Date(0);
+  }
+  return new Date(
+    typeof timestamp.seconds === 'object'
+      ? (timestamp.seconds?.toNumber() ?? 0) * 1000
+      : Number(timestamp.seconds ?? 0) + Number(timestamp.nanos ?? 0) / 1000000,
+  );
+}
+
 export async function getLatestVersion(
   client: KeyManagementServiceClient,
   keyName: string,
@@ -12,8 +24,8 @@ export async function getLatestVersion(
   let latestVersion = versions[0];
   for (let i = 1; i < versions.length; i += 1) {
     if (
-      new Date(latestVersion.createTime as string).valueOf() >
-      new Date(versions[i].createTime as string).valueOf()
+      timestampToDate(latestVersion.createTime).valueOf() >
+      timestampToDate(versions[i].createTime).valueOf()
     ) {
       latestVersion = versions[i];
     }
