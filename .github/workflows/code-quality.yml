@@ -45,7 +45,7 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           create_credentials_file: true
-          workload_identity_provider: 'projects/537642768748/locations/global/workloadIdentityPools/github-actions'
+          workload_identity_provider: 'projects/537642768748/locations/global/workloadIdentityPools/github-actions/providers/github'
           service_account: 'e2e-tests@jwt-gcp-kms.iam.gserviceaccount.com'
       - name: Run end-to-end tests
         run: npm run test-e2e
