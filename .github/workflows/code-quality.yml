@@ -28,6 +28,10 @@ jobs:
   e2e-test:
     name: e2e-test
     runs-on: ubuntu-latest
+    # See: https://github.com/google-github-actions/auth/blob/main/docs/TROUBLESHOOTING.md
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - name: Install node v16
@@ -43,5 +47,3 @@ jobs:
           service_account: 'e2e-tests@jwt-gcp-kms.iam.gserviceaccount.com'
       - name: Run end-to-end tests
         run: npm run test-e2e
-    permissions:
-      id-token: read
