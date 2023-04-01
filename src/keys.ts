@@ -1,23 +1,13 @@
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 
-import { timestampToDate } from './utils/timestamp';
-
-export async function getLatestVersion(
+export async function getLatestVersionName(
   client: KeyManagementServiceClient,
   keyName: string,
-): Promise<{ name: string }> {
+): Promise<string | null> {
   const [versions] = await client.listCryptoKeyVersions({
     parent: keyName,
     filter: 'state=ENABLED',
+    orderBy: 'name desc',
   });
-  let latestVersion = versions[0];
-  for (let i = 1; i < versions.length; i += 1) {
-    if (
-      timestampToDate(latestVersion.createTime).valueOf() <
-      timestampToDate(versions[i].createTime).valueOf()
-    ) {
-      latestVersion = versions[i];
-    }
-  }
-  return { name: latestVersion.name as string };
+  return versions[0]?.name ?? null;
 }

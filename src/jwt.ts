@@ -6,7 +6,7 @@ import { KeyManagementServiceClient } from '@google-cloud/kms';
 import type { KeyPath } from './types';
 
 import { signData } from './jwt/sign.js';
-import { getLatestVersion } from './keys.js';
+import { getLatestVersionName } from './keys.js';
 import { getPublicKey, getPublicKeyFingerprint } from './public-keys.js';
 
 export async function signJWT(
@@ -23,9 +23,9 @@ export async function signJWT(
     keyVersion?: string;
   },
 ): Promise<string> {
-  const keyVersionName: string =
+  const keyVersionName =
     options?.keyVersion ??
-    (await getLatestVersion(
+    (await getLatestVersionName(
       client,
       client.cryptoKeyPath(
         await client.getProjectId(),
@@ -33,7 +33,10 @@ export async function signJWT(
         keyRing,
         keyName,
       ),
-    ).then(({ name }) => name));
+    ));
+  if (!keyVersionName) {
+    throw new Error('Key has no active versions');
+  }
   const kid = getPublicKeyFingerprint(
     crypto.createPublicKey(await getPublicKey(client, keyVersionName)),
   );

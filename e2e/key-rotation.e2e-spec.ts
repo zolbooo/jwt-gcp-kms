@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
 
-import { getLatestVersion } from '../src/keys';
 import { signJWT, verifyJWT } from '../src';
+import { getLatestVersionName } from '../src/keys';
 import { getPublicKeyFingerprint, getPublicKeys } from '../src/public-keys';
 
 import { client } from './utils/client';
@@ -33,8 +33,8 @@ describe('Key rotation', () => {
   });
 
   it('should get the latest version of key', async () => {
-    const { name } = await getLatestVersion(client, keyPath);
-    expect(name).toBe(newVersionName);
+    const latestVersionName = await getLatestVersionName(client, keyPath);
+    expect(latestVersionName).toBe(newVersionName);
   });
 
   it('should sign valid tokens with latest version', async () => {
