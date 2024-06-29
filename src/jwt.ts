@@ -18,7 +18,7 @@ import { getPublicKey, getPublicKeyFingerprint } from './public-keys.js';
  */
 export async function signJWT(
   client: KeyManagementServiceClient,
-  { keyName, keyRing, region = 'asia-east2' }: KeyPath,
+  { projectId, keyName, keyRing, region = 'asia-east2' }: KeyPath,
   token: {
     header?: JwtHeader;
     payload: JwtPayload;
@@ -35,7 +35,7 @@ export async function signJWT(
     (await getLatestVersionName(
       client,
       client.cryptoKeyPath(
-        await client.getProjectId(),
+        projectId ?? (await client.getProjectId()),
         region,
         keyRing,
         keyName,

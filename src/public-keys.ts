@@ -52,11 +52,11 @@ export async function getPublicKey(
  */
 export async function getPublicKeys(
   client: KeyManagementServiceClient,
-  { keyRing, keyName, region = 'asia-east2' }: KeyPath,
+  { projectId, keyRing, keyName, region = 'asia-east2' }: KeyPath,
 ): Promise<JsonWebKeySet> {
   const [versions] = await client.listCryptoKeyVersions({
     parent: client.cryptoKeyPath(
-      await client.getProjectId(),
+      projectId ?? (await client.getProjectId()),
       region,
       keyRing,
       keyName,
